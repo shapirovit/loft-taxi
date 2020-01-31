@@ -11,7 +11,7 @@ const LinkHeader = props => {
             id={props.id}
             onClick={props.handleClick}
             data-islogin={props.islogin}
-            className={props.id === props.setPage ? "HeaderLink activeLink" : "HeaderLink"} >
+            className={props.id === props.activePage ? "HeaderLink activeLink" : "HeaderLink"} >
                 {props.page}
             </a>}
         </>

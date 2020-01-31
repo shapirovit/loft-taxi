@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../Components/Form.jsx';
+import Form from '../Components/Form/index';
 
 const Login = (props) => {
 

@@ -21,18 +21,13 @@ class Form extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const subEvent = event;
-
-        // event.target.id = "map";
-        subEvent.target.id = "map";
-        subEvent.target.dataset.islogin = "true";
-
-        this.props.handleClick(subEvent);
+        event.id = "map";
+        event.isLogin = "true";
+        this.props.handleClick(event);
     }
 
     handleReg = event => {
         event.preventDefault();
-        // this.setState( (state) => {state.isReg = !state.isReg}, () => {console.log("this.state.isReg=", this.state.isReg);} );
         this.setState((state) => ({ isReg: !state.isReg }),  () => {console.log("this.state.isReg=", this.state.isReg);} );
     }
 
@@ -44,32 +39,12 @@ class Form extends Component {
         this.setState( { [name]: event.target.value });
     }
 
-/*     handleLoginChange = event => {
-        this.setState( { login: event.target.value });
-    }
-
-    handlePasswordChange = event => {
-        this.setState( { password: event.target.value });
-    }
-    
-    handleFirstNameChange = event => {
-        this.setState( { firstName: event.target.value });
-    }
-
-    handleLastNameChange = event => {
-        this.setState( { lastName: event.target.value });
-    } */
-
-
     render() {
         const { login, password, firstName, lastName } = this.state;
         
         return (
             <>
-                { this.state.isReg
-                ? <a href="/reg" onClick={this.handleReg} >Зарегистрироваться</a>
-                : <a href="/sign" onClick={this.handleReg} >Войти</a>
-                }
+                <a href="/sign" onClick={this.handleReg} >{this.state.isReg ? "Зарегистрироваться" : "Войти"}</a>
 
                 <form onSubmit={this.handleSubmit}>
                     { !this.state.isReg &&
@@ -112,10 +87,7 @@ class Form extends Component {
                         onChange={this.handleChange}
                     />
                     </label>
-                    { this.state.isReg 
-                        ? <input type="submit" value="Войти" />
-                        : <input type="submit" value="Зарегистрироваться" />
-                    }                                        
+                    <input type="submit" value={ this.state.isReg ? "Войти" : "Зарегистрироваться"} />
                 </form>
             </>
 

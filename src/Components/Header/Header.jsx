@@ -1,5 +1,5 @@
 import React from 'react';
-import LinkHeader from './LinkHeader.jsx';
+import LinkHeader from '../LinkHeader/index';
 import links from './links';
 
 const Header = props => {
@@ -10,7 +10,7 @@ const Header = props => {
                     <LinkHeader
                     hrefPage={props.hrefPage || ""}
                     page={link.link}
-                    setPage={props.setPage}
+                    activePage={props.activePage}
                     handleClick={props.handleClick}
                     key={link.id}
                     id={link.id}
