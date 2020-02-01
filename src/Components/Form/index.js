@@ -1,3 +1,1 @@
-import Form from './Form.jsx';
-
-export default Form;
+export { default } from './Form.jsx';

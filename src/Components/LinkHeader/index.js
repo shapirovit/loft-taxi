@@ -1,3 +1,1 @@
-import LinkHeader from './LinkHeader.jsx';
-
-export default LinkHeader;
+export { default } from './LinkHeader.jsx';

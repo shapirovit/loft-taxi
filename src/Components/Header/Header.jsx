@@ -1,5 +1,5 @@
 import React from 'react';
-import LinkHeader from '../LinkHeader/index';
+import LinkHeader from '../LinkHeader';
 import links from './links';
 
 const Header = props => {

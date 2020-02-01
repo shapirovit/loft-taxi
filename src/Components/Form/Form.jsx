@@ -21,9 +21,7 @@ class Form extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        event.id = "map";
-        event.isLogin = "true";
-        this.props.handleClick(event);
+        this.props.handleClick({id: "map", isLogin: "true"});
     }
 
     handleReg = event => {
