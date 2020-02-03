@@ -1,5 +1,6 @@
 import React from 'react';
 import './LinkHeader.css';
+import PropTypes from 'prop-types';
 
 const LinkHeader = props => {
 
@@ -17,5 +18,22 @@ const LinkHeader = props => {
         </>
     )
 }
+
+LinkHeader.propTypes = {
+    id: PropTypes.string,
+    handleClick: PropTypes.func.isRequired,
+    islogin: PropTypes.string.isRequired,
+    activePage: PropTypes.string.isRequired,
+    page: PropTypes.string
+}
+
+LinkHeader.defaultProps = {
+    // id: ,
+    // handleClick: PropTypes.func.isRequired,
+    islogin: "true",
+    activePage: "map"
+    // page: PropTypes.string
+}
+
 
 export default LinkHeader;

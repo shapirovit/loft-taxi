@@ -1,5 +1,8 @@
 import React from 'react';
 import './Form.css';
+import PropTypes from 'prop-types';
+import { Logo } from 'loft-taxi-mui-theme';
+import { Button, FormLabel, Link, Input, FormHelperText, theme, MuiButton } from '@material-ui/core';
 
 const { Component } = React;
 
@@ -17,6 +20,10 @@ class Form extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
 
+    }
+
+    static propTypes = {
+        handleClick: PropTypes.func.isRequired
     }
 
     handleSubmit = event => {
@@ -67,15 +74,15 @@ class Form extends Component {
                             </label>                            
                         </>                        
                     }
-                    <label>
+                    <FormLabel>
                     Введите свой логин:
-                    <input
+                    <Input
                         name="login"
                         type="text"
                         value={login}
                         onChange={this.handleChange}
                     />
-                    </label>
+                    </FormLabel>
                     <label>
                     Введите свой пароль:
                     <input
@@ -87,6 +94,9 @@ class Form extends Component {
                     </label>
                     <input type="submit" value={ this.state.isReg ? "Войти" : "Зарегистрироваться"} />
                 </form>
+                <button>Новая кнопка</button>
+                <Logo />
+                <Button>Кастомная кнопка</Button>
             </>
 
         );
