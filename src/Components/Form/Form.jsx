@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Form.css';
 import PropTypes from 'prop-types';
+// import { makeStyles } from '@material-ui/core/styles';
 import { Logo } from 'loft-taxi-mui-theme';
 import { Button, FormLabel, Link, Input, FormHelperText, theme, MuiButton } from '@material-ui/core';
-
-const { Component } = React;
 
 
 class Form extends Component {
@@ -48,10 +47,22 @@ class Form extends Component {
         const { login, password, firstName, lastName } = this.state;
         
         return (
-            <>
-                <a href="/sign" onClick={this.handleReg} >{this.state.isReg ? "Зарегистрироваться" : "Войти"}</a>
+            <div className="form-signin">
+                <div className="form-signin-header">{this.state.isReg ? "Войти" : "Регистрация"}</div>
+                <div className="form-signin-text">{this.state.isReg ? "Новый пользователь? " : "Уже зарегистрирован? "}
+                    <a href="/sign" onClick={this.handleReg} >{this.state.isReg ? "Зарегистрироваться" : "Войти"}</a>
+                </div>
 
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>                    
+                    <FormLabel>
+                    Имя пользователя*
+                    <Input
+                        name="login"
+                        type="text"
+                        value={login}
+                        onChange={this.handleChange}
+                    />
+                    </FormLabel>
                     { !this.state.isReg &&
                         <>
                             <label>
@@ -74,17 +85,8 @@ class Form extends Component {
                             </label>                            
                         </>                        
                     }
-                    <FormLabel>
-                    Введите свой логин:
-                    <Input
-                        name="login"
-                        type="text"
-                        value={login}
-                        onChange={this.handleChange}
-                    />
-                    </FormLabel>
                     <label>
-                    Введите свой пароль:
+                    Пароль*
                     <input
                         name="password"
                         type="password"
@@ -92,12 +94,16 @@ class Form extends Component {
                         onChange={this.handleChange}
                     />
                     </label>
-                    <input type="submit" value={ this.state.isReg ? "Войти" : "Зарегистрироваться"} />
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+
+                    >
+                        { this.state.isReg ? "Войти" : "Зарегистрироваться"}
+                    </Button>
                 </form>
-                <button>Новая кнопка</button>
-                <Logo />
-                <Button>Кастомная кнопка</Button>
-            </>
+            </div>
 
         );
     }    
