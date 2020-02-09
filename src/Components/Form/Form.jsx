@@ -16,7 +16,7 @@ class Form extends Component {
             email: "",
             firstName: "",
             lastName: "",
-            isReg: true
+            isReg: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -49,14 +49,14 @@ class Form extends Component {
         
         return (
             <div className={this.state.isReg ? "form-login" : "form-signup"}>
-                <div className="form-signin-header">{this.state.isReg ? "Войти" : "Регистрация"}</div>
-                <div className="form-signin-text">{this.state.isReg ? "Новый пользователь? " : "Уже зарегистрированы? "}
+                <div className="form-header">{this.state.isReg ? "Войти" : "Регистрация"}</div>
+                <div className="form-text">{this.state.isReg ? "Новый пользователь? " : "Уже зарегистрированы? "}
                     <Link href="/sign" onClick={this.handleReg} >{this.state.isReg ? "Зарегистрируйтесь" : "Войти"}</Link>
                 </div>
 
                 
                 <form onSubmit={this.handleSubmit}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={5}>
                         { this.state.isReg &&
                             <>
                                 <Grid item xs={12}>
@@ -74,21 +74,11 @@ class Form extends Component {
                                         onChange={this.handleChange}
                                     />
                                 </Grid>
-
-                                {/* <FormLabel>
-                                Имя пользователя *
-                                <Input
-                                    name="login"
-                                    type="text"
-                                    value={login}
-                                    onChange={this.handleChange}
-                                />
-                                </FormLabel> */}
                             </>
                         }
                         { !this.state.isReg &&
                             <>
-                                <Grid item xs={12}>
+                                <Grid item xs>
                                     <TextField
                                         // id="standard-multiline-flexible"
                                         label="Адрес электронной почты *"
@@ -103,20 +93,8 @@ class Form extends Component {
                                         onChange={this.handleChange}
                                     />
                                 </Grid>
-
-                                {/* <FormLabel>
-                                Адрес электронной почты *
-                                <Input
-                                    name="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={this.handleChange}
-                                />
-                                </FormLabel> */}
-
-                                <Grid container item xs={12} spacing={2}>
-
-                                    <Grid item xs={6}>
+                                <Grid container item spacing={2}>
+                                    <Grid item xs>
                                         <TextField
                                             // id="standard-multiline-flexible"
                                             label="Имя *"
@@ -130,19 +108,8 @@ class Form extends Component {
                                             value={firstName}
                                             onChange={this.handleChange}
                                         />
-                                    </Grid>
-
-                                    {/* <FormLabel>
-                                    Имя *
-                                    <Input
-                                        name="firstName"
-                                        type="text"
-                                        value={firstName}
-                                        onChange={this.handleChange}
-                                    />
-                                    </FormLabel> */}
-                                    
-                                    <Grid item xs={6}>
+                                    </Grid>                                    
+                                    <Grid item xs>
                                         <TextField
                                             // id="standard-multiline-flexible"
                                             label="Фамилия *"
@@ -157,21 +124,11 @@ class Form extends Component {
                                             onChange={this.handleChange}
                                         />
                                     </Grid>
-
-                                    {/* <FormLabel>
-                                    Фамилия *
-                                    <Input
-                                        name="lastName"
-                                        type="text"
-                                        value={lastName}
-                                        onChange={this.handleChange}
-                                    />
-                                    </FormLabel> */}
                                 </Grid>
                             </>
                         }
 
-                        <Grid item xs={12}>
+                        <Grid item xs>
                             <TextField
                                 // id="standard-multiline-flexible"
                                 label="Пароль *"
@@ -186,22 +143,12 @@ class Form extends Component {
                                 onChange={this.handleChange}
                             />
                         </Grid>
-
-                        {/* <FormLabel>
-                        Пароль *
-                        <Input
-                            name="password"
-                            type="password"
-                            value={password}
-                            onChange={this.handleChange}
-                        />
-                        </FormLabel> */}
-
-                        <Grid container justify="flex-end" item xs={12}>
+                        <Grid container justify="flex-end" item>
                             <Button
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                size="large"
                             >
                                 { this.state.isReg ? "Войти" : "Зарегистрироваться"}
                             </Button>

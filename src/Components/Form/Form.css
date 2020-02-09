@@ -3,7 +3,7 @@
     width: 505px;
     height: 476px;
     background: #FFFFFF;
-    border: 3px solid black;
+    border-radius: 4px;
     padding: 65px 59px 63px 52px;
     box-sizing: border-box;
 }
@@ -13,55 +13,28 @@
     width: 505px;
     height: 569px;
     background: #FFFFFF;
-    border: 3px solid black;
+    border-radius: 4px;
     padding: 65px 59px 63px 52px;
     box-sizing: border-box;
 }
 
 
-.form-signin-header {
-    /* position: relative;    
-    width: 233px;
-    height: 99px;
-    left: 54px;
-    top: 37.64px; */
+.form-header {
     padding-left: 1px;
     margin-bottom: 30px;
 
-    border: 1px red solid;
-
     font-size: 36px;
     font-weight: 500;
-    /* line-height: 99px; */
-    /* identical to box height, or 274% */
 
     display: flex;
     align-items: center;
 
     color: #323232;
-
 }
 
-
-
-.form-signin-text {
-    /* position: relative;
-    width: 237px;
-    height: 99px;
-    left: 53px;
-    top: 50.64px; */
-    margin-bottom: 45px;
-
-    border: 1px red solid;
-    
-    /* font-family: AdobeClean; */
+.form-text {
+    margin-bottom: 20px;
     font-size: 16px;
-    /* line-height: 99px; */
 
     color: #505050;
-}
-
-.form-button {
-    display: flex;
-    justify-content: flex-end;
 }
