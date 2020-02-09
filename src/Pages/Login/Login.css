@@ -2,7 +2,11 @@
     height: 100vh;
     width: 100vw;
     min-width: 520px;
-    background: url(../../LoftTaxi.jpg);
+
+    background-image: linear-gradient(to right, rgba(50,50,50,.75), rgba(50,50,50,.75)), url(../../LoftTaxi.jpg);
+    background-repeat: no-repeat, no-repeat;
+    background-size: contain, cover;
+
      /* black; */
     /* url("../../../public/LoftTaxi.jpg"); */
 
