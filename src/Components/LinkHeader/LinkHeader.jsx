@@ -1,6 +1,7 @@
 import React from 'react';
 import './LinkHeader.css';
 import PropTypes from 'prop-types';
+// import { Button } from '@material-ui/core';
 
 const LinkHeader = props => {
 
@@ -8,11 +9,12 @@ const LinkHeader = props => {
         <>
             {<a
             href={props.hrefPage || ""}
-            // page={props.page}
+            page={props.page}
             id={props.id}
             onClick={props.handleClick}
             data-islogin={props.islogin}
-            className={props.id === props.activePage ? "HeaderLink activeLink" : "HeaderLink"} >
+            className={props.id === props.activePage ? "HeaderLink activeLink" : "HeaderLink"}
+            >
                 {props.page}
             </a>}
         </>

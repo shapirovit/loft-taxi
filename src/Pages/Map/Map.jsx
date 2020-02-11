@@ -39,7 +39,7 @@ class Map extends Component {
     render() {
         const style = {
             position: 'absolute',
-            top: 0,
+            top: '80px',
             bottom: 0,
             width: '100%'
         };
