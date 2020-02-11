@@ -1,10 +1,11 @@
 import React from 'react';
 import './Profile.css';
 import { MCIcon } from 'loft-taxi-mui-theme';
-import { Paper, Grid, Typography, Card, Button, TextField } from '@material-ui/core';
+import { Paper, Grid, Typography, Card, Button, TextField, /* FormControl, InputLabel, Input, */ InputAdornment, IconButton } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -56,39 +57,46 @@ const Profile = (props) => {
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
 
-    const month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-    const year = [
-        {year: "2020", yr: "20"},
-        {year: "2021", yr: "21"},
-        {year: "2022", yr: "22"},
-        {year: "2023", yr: "23"},
-        {year: "2024", yr: "24"},
-        {year: "2025", yr: "25"},
-        {year: "2026", yr: "26"},
-        {year: "2027", yr: "27"},
-        {year: "2028", yr: "28"}
-    ];
+    const [values, setValues] = React.useState({
+        card: '',
+        date: '',
+        userName: '',
+        cvc: '',
+        showCvc: false,
+      });
+    
+      const handleChange = prop => event => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+    
+      const handleClickShowCvc = () => {
+        setValues({ ...values, showCvc: !values.showCvc });
+      };
+    
+      const handleMouseDownCvc = event => {
+        event.preventDefault();
+      };
 
-    const [card, setCard] = React.useState();
-    const [date, setDate] = React.useState();
-    const [userName, setUserName] = React.useState();
-    const [cvc, setCvc] = React.useState();
+    // const [card, setCard] = React.useState();
+    // const [date, setDate] = React.useState();
+    // const [userName, setUserName] = React.useState();
+    // const [cvc, setCvc] = React.useState();
 
-    const handleChangeCard = event => {
-        setCard(event.target.value);
-    };
+    // const handleChangeCard = event => {
+    //     setCard(event.target.value);
+    // };
 
-    const handleChangeDate = event => {
-        setDate(event.target.value);
-    };
+    // const handleChangeDate = event => {
+    //     setDate(event.target.value);
+    // };
 
-    const handleChangeUserName = event => {
-        setUserName(event.target.value);
-    };
+    // const handleChangeUserName = event => {
+    //     setUserName(event.target.value);
+    // };
 
-    const handleChangeCvc = event => {
-        setCvc(event.target.value);
-    };
+    // const handleChangeCvc = event => {
+    //     setCvc(event.target.value);
+    // };
 
     return (
         <div className="profile-page">
@@ -113,8 +121,8 @@ const Profile = (props) => {
                                                 type="text"
                                                 minlength="16"
                                                 maxlength="16"
-                                                value={card}
-                                                onChange={handleChangeCard}
+                                                value={values.card}
+                                                onChange={handleChange('card')}
                                             />
                                             <TextField
                                                 className={classes.inputBottom}
@@ -124,8 +132,8 @@ const Profile = (props) => {
                                                 required
                                                 name="date"
                                                 type="text"
-                                                value={date}
-                                                onChange={handleChangeDate}
+                                                value={values.date}
+                                                onChange={handleChange('date')}
                                             />
                                     </Card>                                            
                                 </Grid>
@@ -138,9 +146,35 @@ const Profile = (props) => {
                                             placeholder="USER NAME"
                                             required
                                             name="userName"
-                                            value={userName}
-                                            onChange={handleChangeUserName}
+                                            value={values.userName}
+                                            onChange={handleChange('userName')}
                                         />
+
+                                        {/* <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
+                                            <InputLabel htmlFor="filled-adornment-password">CVC</InputLabel>
+                                            <Input
+                                                className={classes.inputBottom}
+                                                placeholder="CVC"
+                                                required
+                                                maxlength={3}
+                                                id="filled-adornment-password"
+                                                type={values.showCvc ? 'text' : 'password'}
+                                                value={values.cvc}
+                                                onChange={handleChange('cvc')}
+                                                endAdornment={
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowCvc}
+                                                            onMouseDown={handleMouseDownCvc}
+                                                        >
+                                                            {values.showCvc ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                }
+                                            />
+                                        </FormControl> */}
+
                                         <TextField
                                             className={classes.inputBottom}
                                             id="standard-textarea"
@@ -148,11 +182,47 @@ const Profile = (props) => {
                                             placeholder="CVC"
                                             required
                                             name="cvc"
-                                            type="password"
-                                            maxlength="3"
-                                            value={cvc}
-                                            onChange={handleChangeCvc}
+                                            type={values.showCvc ? 'text' : 'password'}
+                                            maxlength={3}
+                                            value={values.cvc}
+                                            onChange={handleChange('cvc')}
+                                            InputProps={{
+                                                endAdornment:
+                                                    <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowCvc}
+                                                        onMouseDown={handleMouseDownCvc}
+                                                    >
+                                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                    </InputAdornment>
+                                            }}
                                         />
+
+                                 {/*        <TextField
+                                            className={classes.inputBottom}
+                                            id="standard-textarea"
+                                            label="CVC"
+                                            placeholder="CVC"
+                                            required
+                                            name="cvc"
+                                            type={values.showCvc ? 'text' : 'password'}
+                                            maxlength={3}
+                                            value={values.cvc}
+                                            onChange={handleChange('cvc')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                  <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowCvc}
+                                                    onMouseDown={handleMouseDownCvc}
+                                                  >
+                                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                  </IconButton>
+                                                </InputAdornment>
+                                            }
+                                        /> */}
                                     </Card>
                                 </Grid>
                             </Grid>
