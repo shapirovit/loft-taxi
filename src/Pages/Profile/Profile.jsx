@@ -90,7 +90,7 @@ const Profile = (props) => {
 
     return (
         <div className="profile-page">
-            <Paper className={ matches ? classes.root : classes.rootShort } rounded>
+            <Paper className={ matches ? classes.root : classes.rootShort } rounded="true" >
                 <Typography align="center" variant="h4" component="h2">Профиль</Typography>
                 <Typography className={classes.subText} align="center">Способ оплаты</Typography>
                 <form onSubmit={handleSubmit}>
@@ -102,20 +102,20 @@ const Profile = (props) => {
                                         <MCIcon />
                                             <TextField
                                                 className={classes.inputTop}
-                                                id="standard-textarea"
+                                                id="standard-textarea-card"
                                                 label="Номер карты"
                                                 placeholder="0000 0000 0000 0000"
                                                 required
                                                 name="card"
                                                 type="text"
-                                                minlength="16"
-                                                maxlength="16"
+                                                // minlength="16"
+                                                // maxlength="16"
                                                 value={values.card}
                                                 onChange={handleChange('card')}
                                             />
                                             <TextField
                                                 className={classes.inputBottom}
-                                                id="standard-textarea"
+                                                id="standard-textarea-date"
                                                 label="Срок действия"
                                                 placeholder="05/25"
                                                 required
@@ -130,7 +130,7 @@ const Profile = (props) => {
                                     <Card elevation={3} className={classes.cardRight}>
                                         <TextField
                                             className={classes.inputTop}
-                                            id="standard-textarea"
+                                            id="standard-textarea-name"
                                             label="Имя владельца"
                                             placeholder="USER NAME"
                                             required
@@ -140,13 +140,13 @@ const Profile = (props) => {
                                         />
                                         <TextField
                                             className={classes.inputBottom}
-                                            id="standard-textarea"
+                                            id="standard-textarea-cvc"
                                             label="CVC"
                                             placeholder="CVC"
                                             required
                                             name="cvc"
                                             type={values.showCvc ? 'text' : 'password'}
-                                            maxlength={3}
+                                            // maxlength={3}
                                             value={values.cvc}
                                             onChange={handleChange('cvc')}
                                             InputProps={{

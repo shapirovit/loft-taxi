@@ -38,7 +38,7 @@ const Form = (props) => {
         //     isReg = !isReg;
         //     return param;
         // });
-        setIsReg(!isReg, () => console.log("isRegCallBack=", isReg));
+        setIsReg(!isReg);
         console.log("isRegAfterClick=", isReg);
         
     }

@@ -51,9 +51,9 @@ class Map extends Component {
         return (
             <div className="map-page">
                 <div style={style} ref={el => this.mapContainer = el} />
-                <Paper style={classes.formOrder } rounded>
+                <Paper style={classes.formOrder } rounded = "true" >
                     <Autocomplete
-                    id="combo-box-demo"
+                    id="combo-box-demo-from"
                     options={adressTest}
                     getOptionLabel={option => option.adress}
                     style={{ marginBottom: "40px" }}
@@ -62,7 +62,7 @@ class Map extends Component {
                     )}
                     />
                     <Autocomplete
-                    id="combo-box-demo"
+                    id="combo-box-demo-to"
                     options={adressTest}
                     getOptionLabel={option => option.adress}
                     style={{ marginBottom: "40px" }}
