@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LinkHeader from '../LinkHeader';
 import links from './links';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { Logo } from 'loft-taxi-mui-theme';
+import { Authorization } from '../../Context/authorization';
 
 const Header = props => {
-    if (props.islogin === "true") {
+
+    const auth = useContext(Authorization);
+
+/*     const handleClick = event => {
+        event.preventDefault();
+        const activePage = event.target.id;
+        const islogin = event.target.dataset.islogin;
+        if (activePage === "login") {
+            auth.logout();
+        }
+        props.handleClick({isLogin: {islogin}, activePage: {activePage} });
+    } */
+
+    if (auth.isLoggedIn) {
         return (        
             <div className="header">
                 <div className="header-center">
@@ -20,7 +34,6 @@ const Header = props => {
                             handleClick={props.handleClick}
                             key={link.id}
                             id={link.id}
-                            islogin={link.islogin}
                             />)}
                     </div>
                 </div>

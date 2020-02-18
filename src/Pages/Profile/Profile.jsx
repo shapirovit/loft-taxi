@@ -63,48 +63,37 @@ const Profile = (props) => {
         userName: '',
         cvc: '',
         showCvc: false,
-      });
+    });
     
-      const handleChange = prop => event => {
+    const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
-      };
-    
-      const handleClickShowCvc = () => {
-        setValues({ ...values, showCvc: !values.showCvc });
-      };
-    
-      const handleMouseDownCvc = event => {
+    };
+
+    const handleClickShowCvc = () => {
+         setValues({ ...values, showCvc: !values.showCvc });
+    };
+
+    const handleMouseDownCvc = event => {
         event.preventDefault();
-      };
+    };
 
-    // const [card, setCard] = React.useState();
-    // const [date, setDate] = React.useState();
-    // const [userName, setUserName] = React.useState();
-    // const [cvc, setCvc] = React.useState();
-
-    // const handleChangeCard = event => {
-    //     setCard(event.target.value);
-    // };
-
-    // const handleChangeDate = event => {
-    //     setDate(event.target.value);
-    // };
-
-    // const handleChangeUserName = event => {
-    //     setUserName(event.target.value);
-    // };
-
-    // const handleChangeCvc = event => {
-    //     setCvc(event.target.value);
-    // };
+    const handleSubmit = event => {
+        event.preventDefault();
+        setValues({
+            card: '',
+            date: '',
+            userName: '',
+            cvc: '',
+            showCvc: false
+        });
+    }
 
     return (
         <div className="profile-page">
-            {/* <Paper className={classes.root} rounded> */}
             <Paper className={ matches ? classes.root : classes.rootShort } rounded>
                 <Typography align="center" variant="h4" component="h2">Профиль</Typography>
                 <Typography className={classes.subText} align="center">Способ оплаты</Typography>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <Grid container justify="center">
                         <Grid item xs={12}>
                             <Grid container direction={ matches ? "row" : "column"} justify="center" spacing={4}>
@@ -149,32 +138,6 @@ const Profile = (props) => {
                                             value={values.userName}
                                             onChange={handleChange('userName')}
                                         />
-
-                                        {/* <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
-                                            <InputLabel htmlFor="filled-adornment-password">CVC</InputLabel>
-                                            <Input
-                                                className={classes.inputBottom}
-                                                placeholder="CVC"
-                                                required
-                                                maxlength={3}
-                                                id="filled-adornment-password"
-                                                type={values.showCvc ? 'text' : 'password'}
-                                                value={values.cvc}
-                                                onChange={handleChange('cvc')}
-                                                endAdornment={
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowCvc}
-                                                            onMouseDown={handleMouseDownCvc}
-                                                        >
-                                                            {values.showCvc ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                }
-                                            />
-                                        </FormControl> */}
-
                                         <TextField
                                             className={classes.inputBottom}
                                             id="standard-textarea"
@@ -199,30 +162,6 @@ const Profile = (props) => {
                                                     </InputAdornment>
                                             }}
                                         />
-
-                                 {/*        <TextField
-                                            className={classes.inputBottom}
-                                            id="standard-textarea"
-                                            label="CVC"
-                                            placeholder="CVC"
-                                            required
-                                            name="cvc"
-                                            type={values.showCvc ? 'text' : 'password'}
-                                            maxlength={3}
-                                            value={values.cvc}
-                                            onChange={handleChange('cvc')}
-                                            endAdornment={
-                                                <InputAdornment position="end">
-                                                  <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowCvc}
-                                                    onMouseDown={handleMouseDownCvc}
-                                                  >
-                                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                                  </IconButton>
-                                                </InputAdornment>
-                                            }
-                                        /> */}
                                     </Card>
                                 </Grid>
                             </Grid>
