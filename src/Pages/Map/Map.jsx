@@ -26,7 +26,7 @@ class Map extends Component {
             top: '0px',
             bottom: '0px',
             width: '100%',
-            zIndex: '-10'            
+            // zIndex: '-10'
         };
 
         const classes = {
@@ -37,7 +37,8 @@ class Map extends Component {
                 width: "392px",
                 height: "315px",
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                zIndex: 1
             }
         };
 

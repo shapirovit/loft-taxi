@@ -1,19 +1,25 @@
 import React, { /* Component, */ useState, useContext } from 'react';
 import './Form.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import { makeStyles } from '@material-ui/core/styles';
 // import { Logo } from 'loft-taxi-mui-theme';
 import { Grid, Button, Link, /* FormLabel, Input, */ TextField } from '@material-ui/core';
 import { Authorization } from '../../Context/authorization';
 
 const Form = (props) => {
-    const [param, setParam] = useState({
-        login: "",
-        password: "",
-        email: "",
-        firstName: "",
-        lastName: "",
-    });
+    // const [param, setParam] = useState({
+    //     login: "",
+    //     password: "",
+    //     email: "",
+    //     firstName: "",
+    //     lastName: "",
+    // });
+
+    const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
     const [isReg, setIsReg] = useState(true);
 
@@ -26,12 +32,6 @@ const Form = (props) => {
 
     const auth = useContext(Authorization);
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        props.handleClick("map");
-        auth.login(param.login || param.email, param.password);
-    }
-
     const handleReg = event => {
         event.preventDefault();
         // setParam(param => {
@@ -39,17 +39,41 @@ const Form = (props) => {
         //     return param;
         // });
         setIsReg(!isReg);
-        console.log("isRegAfterClick=", isReg);
-        
+        // console.log("isRegAfterClick=", isReg);        
     }
 
     const handleChange = event => {
+        console.log("event=", event);
         const { name } = event.target;
-        setParam( param[name] = event.target.value );
-        console.log("param=", param);
+        console.log("name=", name);
+
+        if (name === "login") { setLogin(event.target.value); console.log("login=", login); }
+        if (name === "password") { setPassword(event.target.value); console.log("password=", password); }
+        if (name === "email") { setEmail(event.target.value); console.log("email=", email); }
+        if (name === "firstName") { setFirstName(event.target.value); console.log("firstName=", firstName); }
+        if (name === "lastName") { setLastName(event.target.value); console.log("lastName=", lastName); }
     }
 
-    const { login, password, email, firstName, lastName } = param;
+    const handleSubmit = event => {
+        event.preventDefault();
+        props.handleClick("map");
+        auth.login(login || email, password);
+        // auth.login(param.login || param.email, param.password);
+    }
+
+    // const handleChange = event => {
+    //     console.log("event=", event);
+    //     const { name } = event.target;
+    //     console.log("name=", name);
+    //     console.log("param=", param);
+    //     setParam( param => {
+    //         param[name] = event.target.value;
+    //         return param;
+    //     });
+    //     console.log("paramAfterSetParam=", param);
+    // }
+
+    // const { login, password, email, firstName, lastName } = param;
 
     return (
         <div className={isReg ? "form-login" : "form-signup"}>
@@ -322,5 +346,9 @@ const Form = (props) => {
 //         );
 //     }    
 // }
+
+Form.propTypes = {
+    handleClick: PropTypes.func.isRequired
+}
 
 export default Form;

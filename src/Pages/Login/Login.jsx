@@ -2,6 +2,7 @@ import React from 'react';
 import Form from '../../Components/Form';
 import './Login.css';
 import { Logo } from 'loft-taxi-mui-theme';
+import PropTypes from 'prop-types';
 
 const Login = (props) => {
 
@@ -15,6 +16,10 @@ const Login = (props) => {
         
     ) 
 
+}
+
+Login.propTypes = {
+    handleClick: PropTypes.func.isRequired
 }
 
 export default Login;

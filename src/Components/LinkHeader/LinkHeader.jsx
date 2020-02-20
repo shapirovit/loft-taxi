@@ -27,19 +27,17 @@ const LinkHeader = props => {
 }
 
 LinkHeader.propTypes = {
-    id: PropTypes.string,
+    hrefPage: PropTypes.string,
+    page: PropTypes.string.isRequired,
+    activePage: PropTypes.string,
     handleClick: PropTypes.func.isRequired,
-    islogin: PropTypes.string.isRequired,
-    activePage: PropTypes.string.isRequired,
-    page: PropTypes.string
+    id: PropTypes.string.isRequired
+
 }
 
 LinkHeader.defaultProps = {
-    // id: ,
-    // handleClick: PropTypes.func.isRequired,
-    islogin: "true",
-    activePage: "map"
-    // page: PropTypes.string
+    hrefPage: "",
+    activePage: "map"    
 }
 
 

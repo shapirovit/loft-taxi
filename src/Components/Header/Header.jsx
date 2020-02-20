@@ -28,7 +28,7 @@ const Header = props => {
                     <div className="header-menu">
                         {links.map( link =>
                             <LinkHeader
-                            hrefPage={props.hrefPage || ""}
+                            hrefPage="" /* {props.hrefPage || ""} */
                             page={link.link}
                             activePage={props.activePage}
                             handleClick={props.handleClick}
@@ -46,15 +46,13 @@ const Header = props => {
 }
 
 Header.propTypes = {
-    islogin: PropTypes.string.isRequired,
     activePage: PropTypes.string.isRequired,
     handleClick: PropTypes.func.isRequired
 }
 
-Header.defaultProps = {
-    islogin: "true",
-    activePage: "map"
-    // handleClick: PropTypes.func.isRequired
-}
+// Header.defaultProps = {
+//     // activePage: "map"
+//     // handleClick: PropTypes.func.isRequired
+// }
 
 export default Header;
