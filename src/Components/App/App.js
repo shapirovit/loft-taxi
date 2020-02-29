@@ -4,92 +4,52 @@ import Header from '../Header';
 import Map from '../../Pages/Map';
 import Profile from '../../Pages/Profile';
 import Login from '../../Pages/Login';
-import { Authorization } from '../../Context/authorization';
+// import { Authorization } from '../../Context/authorization';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { mapStateToProps, mapDispatchToProps }  from "../../Actions/contextLogin";
+import { connect } from 'react-redux';
+
+// const mapStateToProps = (state) => {
+//     return {
+//         isLoggedIn: state.contextLogin
+//     }
+//   }
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addContextLogin: (bool) => {
+//         dispatch(contextLogin(bool))
+//         }
+//     }
+// }
 
 const App = (props) => {
     const [activePage, setActivePage] = useState("login");
-
-    const auth = React.useContext(Authorization);
-
+    const { addContextLogin, isLoggedIn } = props;
     const handleClick = (Page) => {
         setActivePage(Page);
         if (Page === "login") {
-            auth.logout();
+            addContextLogin(false);
         }
     }
 
-    const pages = {
-        map: <Map />,
-        profile: <Profile />,
-        login: <Login handleClick={handleClick} />
-    };
-
     return (
         <>
-            { activePage !== "login" && <Header activePage={activePage} handleClick={handleClick} />}
-            {pages[activePage]}
+            {console.log("isLoggedIn=", isLoggedIn)}
+            { isLoggedIn && <Header activePage={activePage} handleClick={handleClick} />}
+            <Switch>
+                <Route path="/map" render={ () => isLoggedIn ? <Map /> : <Redirect to="/login" />} />
+                <Route path="/profile" render={ () => isLoggedIn ? <Profile /> : <Redirect to="/login" />} />
+                <Route path="/login" render={() => isLoggedIn ? <Redirect to="/map" /> : <Login handleClick={handleClick} isReg={true} />  } />
+                <Route path="/signup" render={() => isLoggedIn ? <Redirect to="/map" /> : <Login handleClick={handleClick} isReg={false} />  } />
+                <Redirect exact from="/" to={ isLoggedIn ? "/map" : "/login"} />
+                <Route render={() => <div>Ошибка 404. Страницы, которую вы ввели, не существует!</div> } /> />
+            </Switch>
         </>
-    );
-    
+    );    
 }
 
-
-
-// class App extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             isLogin: "true",
-//             activePage: "map"
-//         };
-//         this.handleClick = this.handleClick.bind(this);
-
-//     }
-
-//     handleClick = event => {
-//         if (!event.id) {
-//             event.preventDefault();
-//         }
-        
-
-//         const isLogin = ( event.isLogin || event.target.dataset.islogin);
-//         console.log("isLogin=", isLogin);
-        
-//         (isLogin !== this.state.isLogin) && this.setState( {isLogin: isLogin}, () => {
-//             console.log("this.state.isLoginCallback=", this.state.isLogin);
-//         } );
-        
-//         const setId = (event.id || event.target.id);
-//         console.log("setId=", setId);
-
-//         (setId !== this.state.activePage) && this.setState( {activePage: setId}, () => {
-//             console.log("this.state.activePageCallback=", this.state.activePage);
-//         } );
-//         console.log("this.state.activePageAfter=", this.state.activePage);
-//         console.log("this.state.isLoginAfter=", this.state.isLogin);
-
-//     }
-
-//     render() {
-
-//         const pages = {
-//             map: <Map />,
-//             profile: <Profile />,
-//             login: <Login handleClick={this.handleClick} />
-//         };
-
-//         console.log("this.state.activePageRenderApp", this.state.activePage);
-        
-
-//         return (
-//             <>
-//                 { this.state.activePage !== "login" && <Header islogin={this.state.isLogin} activePage={this.state.activePage} handleClick={this.handleClick} />}
-//                 {pages[this.state.activePage]}
-                
-//             </>
-//           );
-//     }
- 
-// }
-
-export default App;
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )( App )

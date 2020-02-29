@@ -11,7 +11,7 @@ const Login = (props) => {
             <div className="login-page-logo">
                 <Logo white={"true"} animated={"true"} />
             </div>
-            <Form handleClick={props.handleClick} />
+            <Form handleClick={props.handleClick} isReg={props.isReg} />
         </div>
         
     ) 

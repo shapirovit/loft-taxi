@@ -1,14 +1,32 @@
-import React, { useContext } from 'react';
+import React /* , { useContext } */ from 'react';
 import LinkHeader from '../LinkHeader';
 import links from './links';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { Logo } from 'loft-taxi-mui-theme';
-import { Authorization } from '../../Context/authorization';
+// import { Authorization } from '../../Context/authorization';
+import contextLogin from "../../Actions/contextLogin";
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.contextLogin
+    }
+  }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addContextLogin: (bool) => {
+        dispatch(contextLogin(bool))
+        }
+    }
+}
 
 const Header = props => {
 
-    const auth = useContext(Authorization);
+    const { /* addContextLogin, */ isLoggedIn } = props;
+
+    // const auth = useContext(Authorization);
 
 /*     const handleClick = event => {
         event.preventDefault();
@@ -20,7 +38,7 @@ const Header = props => {
         props.handleClick({isLogin: {islogin}, activePage: {activePage} });
     } */
 
-    if (auth.isLoggedIn) {
+    if (isLoggedIn) {
         return (        
             <div className="header">
                 <div className="header-center">
@@ -28,7 +46,7 @@ const Header = props => {
                     <div className="header-menu">
                         {links.map( link =>
                             <LinkHeader
-                            hrefPage="" /* {props.hrefPage || ""} */
+                            hrefPage={`/${link.id}`} /* {props.hrefPage || ""} */
                             page={link.link}
                             activePage={props.activePage}
                             handleClick={props.handleClick}
@@ -55,4 +73,9 @@ Header.propTypes = {
 //     // handleClick: PropTypes.func.isRequired
 // }
 
-export default Header;
+// export default Header;
+
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )( Header )
