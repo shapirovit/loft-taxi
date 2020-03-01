@@ -18,10 +18,3 @@
         width: 100%;
     }
 }
-
-.profile-page-form-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-}
