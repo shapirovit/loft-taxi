@@ -86,11 +86,11 @@ const Form = (props) => {
         const { name } = event.target;
         // console.log("name=", name);
 
-        if (name === "login") { setLogin(event.target.value); console.log("login=", login); }
-        if (name === "password") { setPassword(event.target.value); console.log("password=", password); }
+        if (name === "login") { setLogin(event.target.value); /* console.log("login=", login); */ }
+        if (name === "password") { setPassword(event.target.value); /* console.log("password=", password); */ }
         // if (name === "email") { setEmail(event.target.value); console.log("email=", email); }
-        if (name === "firstName") { setFirstName(event.target.value); console.log("firstName=", firstName); }
-        if (name === "lastName") { setLastName(event.target.value); console.log("lastName=", lastName); }
+        if (name === "firstName") { setFirstName(event.target.value); /* console.log("firstName=", firstName); */ }
+        if (name === "lastName") { setLastName(event.target.value); /* console.log("lastName=", lastName); */ }
     }
 
     const handleSubmit = event => {
@@ -107,12 +107,15 @@ const Form = (props) => {
                 email: login,
                 password: password,
             }
-            console.log("userLogin=", userLogin);
             addFetchUser(userLogin);
-            // props.handleClick("map");
-            // addCurrentUser(user);
-            // addContextLogin(true);
         }
+        console.log("loginStatus===", loginStatus);
+        
+        // if (loginStatus) {            
+        //     addCurrentUser(user);
+        //     addContextLogin(true);
+        //     props.handleClick("map");
+        // }
 
         // console.log("user=", user);
         // console.log("currentUserAfterSubmit=", currentUser);
