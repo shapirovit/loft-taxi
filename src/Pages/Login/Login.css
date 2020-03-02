@@ -1,0 +1,27 @@
+.login-page {
+    height: 100vh;
+    width: 100vw;
+    min-width: 520px;
+
+    background-image: linear-gradient(to right, rgba(50,50,50,.75), rgba(50,50,50,.75)), url(../../LoftTaxi.jpg);
+    background-repeat: no-repeat, no-repeat;
+    background-size: contain, cover;
+
+     /* black; */
+    /* url("../../../public/LoftTaxi.jpg"); */
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* space-evenly; */
+    align-content: center;
+}
+
+.login-page-logo {
+    margin: 10px 210px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+}

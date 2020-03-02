@@ -1,13 +1,40 @@
-.HeaderLink {
-    font-size: 24px;
-    text-decoration: none;
-    padding: 2px;
-    margin: 1px;
-    margin-top: 5px;
-    color: black;
+.form-login {
+    /* position: absolute; */
+    width: 505px;
+    height: 476px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    padding: 65px 59px 63px 52px;
+    box-sizing: border-box;
 }
 
-.activeLink {
-    /* border: 3px blue solid; */
-    color: blue;
+.form-signup {
+    /* position: absolute; */
+    width: 505px;
+    height: 569px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    padding: 65px 59px 63px 52px;
+    box-sizing: border-box;
+}
+
+
+.form-header {
+    padding-left: 1px;
+    margin-bottom: 30px;
+
+    font-size: 36px;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+
+    color: #323232;
+}
+
+.form-text {
+    margin-bottom: 20px;
+    font-size: 16px;
+
+    color: #505050;
 }
