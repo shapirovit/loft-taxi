@@ -8,14 +8,15 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import { LoginProvider } from './Context/authorization';
 import {BrowserRouter} from 'react-router-dom';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import reducerApp from './Redusers';
 import { Provider } from 'react-redux';
+import userFetchingMiddleware from './Middleware';
 
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
-let store = createStore(reducerApp);
+let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware));
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>

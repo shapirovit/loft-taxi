@@ -8,13 +8,19 @@ import { Grid, Button, /* Link, */ /* FormLabel, Input, */ TextField } from '@ma
 import { Link as NavLink } from 'react-router-dom';
 import contextLogin from "../../Actions";
 import currentUser from "../../Actions/currentUser";
+import fetchUserRequest from "../../Actions/fetchUserRequest";
 import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.contextLogin,
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+
+        isFetching: state.fetchUser.isFetching,
+        isFetched: state.fetchUser.isFetched,
+        loginStatus: state.fetchUser.status,
+        error: state.fetchUser.error,
     }
   }
 
@@ -25,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addCurrentUser: (user) => {
             dispatch(currentUser(user))
+        },
+        addFetchUser: (user) => {
+            dispatch(fetchUserRequest(user))
         }
     }
 }
@@ -39,8 +48,9 @@ const Form = (props) => {
     // });
 
     const { addContextLogin, addCurrentUser, currentUser /* , isLoggedIn */ } = props;
+    const { isFetching, isFetched, loginStatus, error, addFetchUser} = props;
 
-    console.log("currentUser=", currentUser);    
+    // console.log("currentUser=", currentUser);
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -50,9 +60,9 @@ const Form = (props) => {
 
     const [isReg, setIsReg] = useState(props.isReg);
 
-    console.log("props.isReg=", props.isReg);
+    // console.log("props.isReg=", props.isReg);
     
-    console.log("isReg=", isReg);
+    // console.log("isReg=", isReg);
 
     // const [param, setParam] = useState({});
 
@@ -72,9 +82,9 @@ const Form = (props) => {
     }
 
     const handleChange = event => {
-        console.log("event=", event);
+        // console.log("event=", event);
         const { name } = event.target;
-        console.log("name=", name);
+        // console.log("name=", name);
 
         if (name === "login") { setLogin(event.target.value); console.log("login=", login); }
         if (name === "password") { setPassword(event.target.value); console.log("password=", password); }
@@ -85,18 +95,27 @@ const Form = (props) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        props.handleClick("map");
-        addContextLogin(true);
         const user = {
             login: login,
             password: password,
             firstName: firstName,
             lastName: lastName
         }
-        addCurrentUser(user);
+        
+        if (isReg) {
+            let userLogin = {
+                email: login,
+                password: password,
+            }
+            console.log("userLogin=", userLogin);
+            addFetchUser(userLogin);
+            // props.handleClick("map");
+            // addCurrentUser(user);
+            // addContextLogin(true);
+        }
 
-        console.log("user=", user);
-        console.log("currentUserAfterSubmit=", currentUser);
+        // console.log("user=", user);
+        // console.log("currentUserAfterSubmit=", currentUser);
         // auth.login(login || email, password);
         // document.location.href = "map";
         // auth.login(param.login || param.email, param.password);
@@ -147,8 +166,9 @@ const Form = (props) => {
                                     // rowsMax="4"
                                     value={login}
                                     onChange={handleChange}
-                                />
+                                />                              
                             </Grid>
+
                         </>
                     }
                     { !isReg &&
@@ -217,6 +237,12 @@ const Form = (props) => {
                             value={password}
                             onChange={handleChange}
                         />
+                        {isFetching && <p>Загружаем данные...</p>}
+                        { (error != null) && <div>
+                                                <p>Ошибка при загрузке данных:</p>
+                                                <p>{error}</p>
+                                            </div>
+                        }
                     </Grid>
                     <Grid container justify="flex-end" item>
                         <Button
