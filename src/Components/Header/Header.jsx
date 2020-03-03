@@ -5,26 +5,30 @@ import PropTypes from 'prop-types';
 import './Header.css';
 import { Logo } from 'loft-taxi-mui-theme';
 // import { Authorization } from '../../Context/authorization';
-import contextLogin from "../../Actions/contextLogin";
+import statusLogin from "../../Actions/statusLogin";
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.contextLogin
+        isLoggedIn: state.statusLogin.status,
+        State: state
     }
   }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addContextLogin: (bool) => {
-        dispatch(contextLogin(bool))
+        addStatusLogin: (bool) => {
+        dispatch(statusLogin(bool))
         }
     }
 }
 
 const Header = props => {
 
-    const { /* addContextLogin, */ isLoggedIn } = props;
+    const { /* addStatusLogin, */ isLoggedIn, State } = props;
+
+    console.log("State in Header=", State);
+    
 
     // const auth = useContext(Authorization);
 

@@ -1,4 +1,4 @@
-let initialState = {};
+let initialState = "";
 
 export default function currentUser (state = initialState, action) {
     switch (action.type) {

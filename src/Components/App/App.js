@@ -6,30 +6,45 @@ import Profile from '../../Pages/Profile';
 import Login from '../../Pages/Login';
 // import { Authorization } from '../../Context/authorization';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { mapStateToProps, mapDispatchToProps }  from "../../Actions/contextLogin";
+import statusLogin from "../../Actions/statusLogin";
+import fetchUserSuccess from "../../Actions/fetchUserSuccess";
+import currentUser from "../../Actions/currentUser";
+import fetchUserOut from "../../Actions/fetchUserOut"
 import { connect } from 'react-redux';
 
-// const mapStateToProps = (state) => {
-//     return {
-//         isLoggedIn: state.contextLogin
-//     }
-//   }
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.statusLogin.status
+    }
+  }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addContextLogin: (bool) => {
-//         dispatch(contextLogin(bool))
-//         }
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addStatusLogin: (obj) => {
+            dispatch(statusLogin(obj))
+        },
+        outFetchStatus: (obj) => {
+            dispatch(fetchUserSuccess(obj));
+        },
+        outCurrentUser: (user) => {
+            dispatch(currentUser(user))
+        },
+        outStatusUser: () => {
+            dispatch(fetchUserOut())
+        },
+    }
+}
 
 const App = (props) => {
     const [activePage, setActivePage] = useState("login");
-    const { addContextLogin, isLoggedIn } = props;
+    const { addStatusLogin, outCurrentUser, outStatusUser, isLoggedIn } = props;
     const handleClick = (Page) => {
         setActivePage(Page);
         if (Page === "login") {
-            addContextLogin(false);
+            addStatusLogin({status: false});
+            fetchUserSuccess({});
+            outCurrentUser("");
+            outStatusUser();
         }
     }
 

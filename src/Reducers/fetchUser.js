@@ -13,6 +13,12 @@ const fetchUser = (state = initState, action) => {
                 isFetching: true,
                 isFetched: false,
             }
+        case "FETCH_USER_REQUEST_REGISTR":
+            return {
+                ...state,
+                isFetching: true,
+                isFetched: false,
+            }
         case "FETCH_USER_SUCCESS":
             return {
                 ...state,
@@ -26,6 +32,14 @@ const fetchUser = (state = initState, action) => {
                 isFetched: true,
                 isFetching: false,
                 error: action.error
+            }
+        case "FETCH_USER_OUT":
+            return {
+                ...state,
+                isFetched: false,
+                isFetching: false,
+                status: {},
+                error: null
             }
         default: return state;
     }

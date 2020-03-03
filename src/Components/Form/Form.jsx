@@ -6,15 +6,17 @@ import PropTypes from 'prop-types';
 import { Grid, Button, /* Link, */ /* FormLabel, Input, */ TextField } from '@material-ui/core';
 // import { Authorization } from '../../Context/authorization';
 import { Link as NavLink } from 'react-router-dom';
-import contextLogin from "../../Actions";
+import statusLogin from "../../Actions/statusLogin";
 import currentUser from "../../Actions/currentUser";
 import fetchUserRequest from "../../Actions/fetchUserRequest";
+import fetchUserRequestRegistr from "../../Actions/fetchUserRequestRegistr";
 import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.contextLogin,
+        State: state,
+        isLoggedIn: state.statusLogin.status,
         currentUser: state.currentUser,
 
         isFetching: state.fetchUser.isFetching,
@@ -26,14 +28,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addContextLogin: (bool) => {
-            dispatch(contextLogin(bool))
+        addStatusLogin: (bool) => {
+            dispatch(statusLogin(bool))
         },
         addCurrentUser: (user) => {
             dispatch(currentUser(user))
         },
         addFetchUser: (user) => {
             dispatch(fetchUserRequest(user))
+        },
+        regFetchUser: (user) => {
+            dispatch(fetchUserRequestRegistr(user))
         }
     }
 }
@@ -47,8 +52,8 @@ const Form = (props) => {
     //     lastName: "",
     // });
 
-    const { addContextLogin, addCurrentUser, currentUser /* , isLoggedIn */ } = props;
-    const { isFetching, isFetched, loginStatus, error, addFetchUser} = props;
+    const { /* addStatusLogin, */ addCurrentUser/*, currentUser */ /* , isLoggedIn */ } = props;
+    const { isFetching, isFetched, loginStatus, error, addFetchUser, regFetchUser, State} = props;
 
     // console.log("currentUser=", currentUser);
 
@@ -96,10 +101,10 @@ const Form = (props) => {
     const handleSubmit = event => {
         event.preventDefault();
         const user = {
-            login: login,
+            email: login,
             password: password,
-            firstName: firstName,
-            lastName: lastName
+            name: firstName,
+            surname: lastName
         }
         
         if (isReg) {
@@ -108,12 +113,20 @@ const Form = (props) => {
                 password: password,
             }
             addFetchUser(userLogin);
+            props.handleClick("map");
+            addCurrentUser(userLogin.email);
+        } else {
+            regFetchUser(user);
+            // addFetchUser(user);
+            props.handleClick("map");
+            addCurrentUser(user.email);
         }
+
         console.log("loginStatus===", loginStatus);
         
         // if (loginStatus) {            
         //     addCurrentUser(user);
-        //     addContextLogin(true);
+        //     addStatusLogin(true);
         //     props.handleClick("map");
         // }
 
@@ -241,6 +254,11 @@ const Form = (props) => {
                             onChange={handleChange}
                         />
                         {isFetching && <p>Загружаем данные...</p>}
+                        {console.log("isFetched=", isFetched)}
+                        {console.log("loginStatus=", loginStatus)}
+                        {console.log("loginStatus.success=", loginStatus.success)}
+                        {console.log("STATE========", State)}
+                        {isFetched && !loginStatus.success && <p>{loginStatus.error}</p>}
                         { (error != null) && <div>
                                                 <p>Ошибка при загрузке данных:</p>
                                                 <p>{error}</p>

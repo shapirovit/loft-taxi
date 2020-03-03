@@ -9,14 +9,15 @@ import { LoginProvider } from './Context/authorization';
 import {BrowserRouter} from 'react-router-dom';
 
 import { createStore, applyMiddleware } from 'redux';
-import reducerApp from './Redusers';
+import reducerApp from './Reducers';
 import { Provider } from 'react-redux';
-import userFetchingMiddleware from './Middleware';
+import userFetchingMiddleware from './Middlewares';
+import userFetchingRegistrMiddleware from './Middlewares/userFetchingRegistrMiddleware'
 
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
-let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware));
+let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware, userFetchingRegistrMiddleware));
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
