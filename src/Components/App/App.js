@@ -53,8 +53,8 @@ const App = (props) => {
             {console.log("isLoggedIn=", isLoggedIn)}
             { isLoggedIn && <Header activePage={activePage} handleClick={handleClick} />}
             <Switch>
-                <Route path="/map" render={ () => isLoggedIn ? <Map /> : <Redirect to="/login" />} />
-                <Route path="/profile" render={ () => isLoggedIn ? <Profile /> : <Redirect to="/login" />} />
+                <Route path="/map" render={ () => isLoggedIn ? <Map handleClick={handleClick} /> : <Redirect to="/login" />} />
+                <Route path="/profile" render={ () => isLoggedIn ? <Profile handleClick={handleClick} /> : <Redirect to="/login" />} />
                 <Route path="/login" render={() => isLoggedIn ? <Redirect to="/map" /> : <Login handleClick={handleClick} isReg={true} />  } />
                 <Route path="/signup" render={() => isLoggedIn ? <Redirect to="/map" /> : <Login handleClick={handleClick} isReg={false} />  } />
                 <Redirect exact from="/" to={ isLoggedIn ? "/map" : "/login"} />

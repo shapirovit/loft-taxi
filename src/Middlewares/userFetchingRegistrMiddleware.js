@@ -3,7 +3,7 @@ import fetchUserFailure from "../Actions/fetchUserFailure";
 import statusLogin from "../Actions";
 
 const userFetchingRegistrMiddleware = store => next => action => {
-    const result = next(action);
+    const resultNext = next(action);
     console.log("userFetchingMiddleware is starting");
     
    
@@ -28,7 +28,7 @@ const userFetchingRegistrMiddleware = store => next => action => {
                 store.dispatch(fetchUserFailure(error))
             })
     }
-    return result;
+    return resultNext;
 }
 
 export default userFetchingRegistrMiddleware;

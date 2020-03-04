@@ -53,7 +53,7 @@ const Form = (props) => {
     // });
 
     const { /* addStatusLogin, */ addCurrentUser/*, currentUser */ /* , isLoggedIn */ } = props;
-    const { isFetching, isFetched, loginStatus, error, addFetchUser, regFetchUser, State} = props;
+    const { isFetching, isFetched, loginStatus, error, addFetchUser, regFetchUser, /* State */} = props;
 
     // console.log("currentUser=", currentUser);
 
@@ -254,10 +254,10 @@ const Form = (props) => {
                             onChange={handleChange}
                         />
                         {isFetching && <p>Загружаем данные...</p>}
-                        {console.log("isFetched=", isFetched)}
+                        {/* {console.log("isFetched=", isFetched)}
                         {console.log("loginStatus=", loginStatus)}
                         {console.log("loginStatus.success=", loginStatus.success)}
-                        {console.log("STATE========", State)}
+                        {console.log("STATE========", State)} */}
                         {isFetched && !loginStatus.success && <p>{loginStatus.error}</p>}
                         { (error != null) && <div>
                                                 <p>Ошибка при загрузке данных:</p>

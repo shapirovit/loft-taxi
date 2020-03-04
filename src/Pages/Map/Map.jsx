@@ -8,6 +8,9 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhcGlyb3ZldCIsImEiOiJjazY2MW1tZ20wdWpxM25vN
 
 class Map extends Component {
     componentDidMount() {
+
+        this.props.handleClick("map");
+
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',

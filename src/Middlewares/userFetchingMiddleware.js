@@ -3,7 +3,7 @@ import fetchUserFailure from "../Actions/fetchUserFailure";
 import statusLogin from "../Actions";
 
 const userFetchingMiddleware = store => next => action => {
-    const result = next(action);
+    const resultNext = next(action);
     console.log("userFetchingMiddleware is starting");
     
    
@@ -50,7 +50,7 @@ const userFetchingMiddleware = store => next => action => {
         //         })
         // }
     }
-    return result;
+    return resultNext;
 }
 
 export default userFetchingMiddleware;

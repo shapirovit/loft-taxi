@@ -5,20 +5,29 @@ import { Paper, Grid, Typography, Card, Button, TextField, InputAdornment, IconB
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import addCard from "../../Actions/addCard";
+import activePage from "../../Actions/activePage";
+import { fetchCardRequest } from "../../Actions/fetchCard";
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const mapStateToProps = (state) => {
     return {
         currentCard: state.addCard,
+        cardStatus: state.statusCard.status,
+        token: state.statusLogin.token,
+        isFetching: state.fetchCard.isFetching,
+        error: state.fetchCard.error,
     }
   }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addNewCard: (card) => {
-            dispatch(addCard(card))
-        }
+        addActivePage: (page) => {
+            dispatch(activePage(page))
+        },
+        addFetchCard: (card) => {
+            dispatch(fetchCardRequest(card))
+        },
     }
 }
 
@@ -69,15 +78,15 @@ const useStyles = makeStyles(theme => ({
 
 const FormCard = (props) => {
 
-    const { addNewCard } = props;    
+    const { /* addNewCard, */ addActivePage, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;    
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
 
     const [values, setValues] = React.useState({
-        card: '',
-        date: '',
-        userName: '',
+        cardNumber: '',
+        expiryDate: '',
+        cardName: '',
         cvc: '',
         showCvc: false,
     });
@@ -94,13 +103,22 @@ const FormCard = (props) => {
         event.preventDefault();
     };
 
+    const handleClickMap = event => {
+        event.preventDefault();
+        // addActivePage('map');
+        handleClick('map');
+    };
+
     const handleSubmit = event => {
         event.preventDefault();
-        addNewCard(values);        
+        let card = {...values, token: token};
+        delete card.showCvc;
+        addFetchCard(card);
+        // addNewCard(values);
         setValues({
-            card: '',
-            date: '',
-            userName: '',
+            cardNumber: '',
+            expiryDate: '',
+            cardName: '',
             cvc: '',
             showCvc: false
         });
@@ -110,10 +128,23 @@ const FormCard = (props) => {
         <Paper className={ matches ? classes.root : classes.rootShort } rounded="true" >
             <Typography align="center" variant="h4" component="h2">Профиль</Typography>
             <Typography className={classes.subText} align="center">Способ оплаты</Typography>
-            <form onSubmit={handleSubmit}>
+
+            { (cardStatus === true) && 
+                <>
+                    <div align="center">Данные карты успешно сохранены!</div>
+                    <div align="center" onClick={handleClickMap}>
+                        <Link to="/map">Перейти на карту к выбору маршрута</Link>
+                    </div>
+                </>
+            }
+
+            <form onSubmit={handleSubmit} >
                 <Grid container justify="center">
                     <Grid item xs={12}>
                         <Grid container direction={ matches ? "row" : "column"} justify="center" spacing={4}>
+                            
+                            { (cardStatus === false) &&
+                            <>
                             <Grid item xs={12} sm={6}>
                                 <Card elevation={3} className={classes.cardLeft}>
                                     <MCIcon />
@@ -123,10 +154,10 @@ const FormCard = (props) => {
                                             label="Номер карты"
                                             placeholder="0000 0000 0000 0000"
                                             required
-                                            name="card"
+                                            name="cardNumber"
                                             type="text"
-                                            value={values.card}
-                                            onChange={handleChange('card')}
+                                            value={values.cardNumber}
+                                            onChange={handleChange('cardNumber')}
                                         />
                                         <TextField
                                             className={classes.inputBottom}
@@ -134,10 +165,10 @@ const FormCard = (props) => {
                                             label="Срок действия"
                                             placeholder="05/25"
                                             required
-                                            name="date"
+                                            name="expiryDate"
                                             type="text"
-                                            value={values.date}
-                                            onChange={handleChange('date')}
+                                            value={values.expiryDate}
+                                            onChange={handleChange('expiryDate')}
                                         />
                                 </Card>                                            
                             </Grid>
@@ -149,9 +180,9 @@ const FormCard = (props) => {
                                         label="Имя владельца"
                                         placeholder="USER NAME"
                                         required
-                                        name="userName"
-                                        value={values.userName}
-                                        onChange={handleChange('userName')}
+                                        name="cardName"
+                                        value={values.cardName}
+                                        onChange={handleChange('cardName')}
                                     />
                                     <TextField
                                         className={classes.inputBottom}
@@ -178,9 +209,17 @@ const FormCard = (props) => {
                                     />
                                 </Card>
                             </Grid>
+                            </>
+                            }
                         </Grid>
                     </Grid>                  
                 </Grid>
+                {isFetching && <p>Сохраняем данные...</p>}
+                { (error != null) && <div>
+                                         <p>Ошибка при загрузке данных:</p>
+                                         <p>{error}</p>
+                                     </div>
+                }
                 <div className="form-card-button">
                     <Button
                         type="submit"

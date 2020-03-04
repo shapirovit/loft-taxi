@@ -13,11 +13,12 @@ import reducerApp from './Reducers';
 import { Provider } from 'react-redux';
 import userFetchingMiddleware from './Middlewares';
 import userFetchingRegistrMiddleware from './Middlewares/userFetchingRegistrMiddleware'
+import cardFetchingMiddleware from './Middlewares/cardFetchingMiddleware'
 
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
-let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware, userFetchingRegistrMiddleware));
+let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware, userFetchingRegistrMiddleware, cardFetchingMiddleware));
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
