@@ -2,6 +2,28 @@ import React, { Component } from 'react';
 import './Map.css';
 import { Paper, Button, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import statusCard from "../../Actions/statusCard";
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {        
+        cardStatus: state.statusCard.status,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        /* addActivePage: (page) => {
+            dispatch(activePage(page))
+        },
+        addFetchCard: (card) => {
+            dispatch(fetchCardRequest(card))
+        }, */
+        addStatusCard: (obj) => {
+            dispatch(statusCard(obj))
+        },
+    }
+}
 
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhcGlyb3ZldCIsImEiOiJjazY2MW1tZ20wdWpxM25vN29tNDQ4aHY2In0.9w-ICwV8xa_L-pwWR6nU6A';
@@ -24,6 +46,9 @@ class Map extends Component {
     }
 
     render() {
+
+        const { cardStatus } = this.props;
+
         const style = {
             position: 'absolute',
             top: '0px',
@@ -55,6 +80,9 @@ class Map extends Component {
         return (
             <div className="map-page">
                 <div style={style} ref={el => this.mapContainer = el} />
+
+                { (cardStatus) &&
+                <>
                 <Paper style={classes.formOrder } rounded = "true" >
                     <Autocomplete
                     id="combo-box-demo-from"
@@ -84,9 +112,16 @@ class Map extends Component {
                         Вызвать такси
                     </Button>
                 </Paper>
+                </>
+                }
             </div>
         )       
     }
 }
 
-export default Map;
+// export default Map;
+
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )( Map )

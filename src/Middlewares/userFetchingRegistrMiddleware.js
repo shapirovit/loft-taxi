@@ -4,7 +4,7 @@ import statusLogin from "../Actions";
 
 const userFetchingRegistrMiddleware = store => next => action => {
     const resultNext = next(action);
-    console.log("userFetchingMiddleware is starting");
+    console.log("userFetchingRegistrMiddleware is starting");
     
    
     if (action.type === "FETCH_USER_REQUEST_REGISTR") {

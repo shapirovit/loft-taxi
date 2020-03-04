@@ -9,6 +9,7 @@ import activePage from "../../Actions/activePage";
 import { fetchCardRequest } from "../../Actions/fetchCard";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import statusCard from "../../Actions/statusCard";
 
 const mapStateToProps = (state) => {
     return {
@@ -18,7 +19,7 @@ const mapStateToProps = (state) => {
         isFetching: state.fetchCard.isFetching,
         error: state.fetchCard.error,
     }
-  }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -27,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addFetchCard: (card) => {
             dispatch(fetchCardRequest(card))
+        },
+        addStatusCard: (obj) => {
+            dispatch(statusCard(obj))
         },
     }
 }
@@ -41,10 +45,27 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column"
     },
     rootShort: {
+        margin: "48px 0px 0px 0px",
+        padding: "44px 60px",
+        width: "420px",
+        height: "650px",  /* "680px", */
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box"
+    },
+    rootSuccess: {
+        margin: "48px 0px",
+        padding: "44px 60px",
+        width: "500px",
+        height: "220px",
+        display: "flex",
+        flexDirection: "column"
+    },
+    rootSuccessShort: {
         margin: "48px 0px",
         padding: "44px 60px",
         width: "420px",
-        height: "680px",
+        height: "360px",
         display: "flex",
         flexDirection: "column",
         boxSizing: "border-box"
@@ -78,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 const FormCard = (props) => {
 
-    const { /* addNewCard, */ addActivePage, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;    
+    const { /* addNewCard, */ addStatusCard, addActivePage, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
@@ -111,21 +132,25 @@ const FormCard = (props) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        let card = {...values, token: token};
-        delete card.showCvc;
-        addFetchCard(card);
-        // addNewCard(values);
-        setValues({
-            cardNumber: '',
-            expiryDate: '',
-            cardName: '',
-            cvc: '',
-            showCvc: false
-        });
+        if (!cardStatus) {
+            let card = {...values, token: token};
+            delete card.showCvc;
+            addFetchCard(card);
+            // addNewCard(values);
+            setValues({
+                cardNumber: '',
+                expiryDate: '',
+                cardName: '',
+                cvc: '',
+                showCvc: false
+            });
+        } else {
+            addStatusCard({status: false});
+        }
     }
 
     return (
-        <Paper className={ matches ? classes.root : classes.rootShort } rounded="true" >
+        <Paper className={ cardStatus ? ( matches ? classes.rootSuccess : classes.rootSuccessShort ) : (matches ? classes.root : classes.rootShort) } rounded="true" >
             <Typography align="center" variant="h4" component="h2">Профиль</Typography>
             <Typography className={classes.subText} align="center">Способ оплаты</Typography>
 
@@ -133,7 +158,7 @@ const FormCard = (props) => {
                 <>
                     <div align="center">Данные карты успешно сохранены!</div>
                     <div align="center" onClick={handleClickMap}>
-                        <Link to="/map">Перейти на карту к выбору маршрута</Link>
+                        <Link to="/map">Перейти к выбору маршрута</Link>
                     </div>
                 </>
             }
@@ -213,13 +238,7 @@ const FormCard = (props) => {
                             }
                         </Grid>
                     </Grid>                  
-                </Grid>
-                {isFetching && <p>Сохраняем данные...</p>}
-                { (error != null) && <div>
-                                         <p>Ошибка при загрузке данных:</p>
-                                         <p>{error}</p>
-                                     </div>
-                }
+                </Grid>                
                 <div className="form-card-button">
                     <Button
                         type="submit"
@@ -227,9 +246,15 @@ const FormCard = (props) => {
                         color="primary"
                         size="large"
                     >
-                        Сохранить
+                        { cardStatus ? "Изменить платежные данные" : "Сохранить" }
                     </Button>
                 </div>
+                {isFetching && <p align="center" >Сохраняем данные...</p>}
+                { (error != null) && <div>
+                                         <p>Ошибка при загрузке данных:</p>
+                                         <p>{error}</p>
+                                     </div>
+                }
             </form>
         </Paper>
     )
