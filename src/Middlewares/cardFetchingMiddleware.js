@@ -21,7 +21,8 @@ const cardFetchingMiddleware = store => next => action => {
                 console.log("resultCard===", result);
                 store.dispatch(fetchCardSuccess(result));
                 if (result.success === true) {
-                    store.dispatch(statusCard({status: result.success}));
+                    store.dispatch(statusCard({ ...action.payload, status: result.success}));
+                    localStorage["statusCard"] = JSON.stringify({ ...action.payload, status: result.success});
                 }
             })
             .catch(error => {

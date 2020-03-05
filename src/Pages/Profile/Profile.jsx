@@ -6,7 +6,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         props.handleClick("profile");
-    });    
+    });
 
     return (
         <div className="profile-page">

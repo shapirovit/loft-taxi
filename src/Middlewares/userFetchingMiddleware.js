@@ -5,6 +5,7 @@ import statusLogin from "../Actions";
 const userFetchingMiddleware = store => next => action => {
     const resultNext = next(action);
     console.log("userFetchingMiddleware is starting");
+    console.log("store.getState()=", store.getState());
     
    
     if (action.type === "FETCH_USER_REQUEST") {
@@ -24,6 +25,7 @@ const userFetchingMiddleware = store => next => action => {
                     store.dispatch(fetchUserSuccess(result));
                     if (result.success === true) {
                         store.dispatch(statusLogin({status: true, token: result.token}));
+                        localStorage["statusLogin"] = JSON.stringify({ status: true, token: result.token });
                     }
                 })
                 .catch(error => {

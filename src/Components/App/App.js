@@ -7,9 +7,11 @@ import Login from '../../Pages/Login';
 // import { Authorization } from '../../Context/authorization';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import statusLogin from "../../Actions/statusLogin";
+import statusCard from "../../Actions/statusCard";
 import fetchUserSuccess from "../../Actions/fetchUserSuccess";
 import currentUser from "../../Actions/currentUser";
 import fetchUserOut from "../../Actions/fetchUserOut"
+import { fetchCardOut } from "../../Actions/fetchCard"
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -23,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
         addStatusLogin: (obj) => {
             dispatch(statusLogin(obj))
         },
+        addStatusCard: (obj) => {
+            dispatch(statusCard(obj))
+        },
         outFetchStatus: (obj) => {
             dispatch(fetchUserSuccess(obj));
         },
@@ -32,19 +37,26 @@ const mapDispatchToProps = (dispatch) => {
         outStatusUser: () => {
             dispatch(fetchUserOut())
         },
+        outStatusCard: () => {
+            dispatch(fetchCardOut())
+        },
     }
 }
 
 const App = (props) => {
     const [activePage, setActivePage] = useState("login");
-    const { addStatusLogin, outCurrentUser, outStatusUser, isLoggedIn } = props;
+    const { addStatusLogin, addStatusCard, outCurrentUser, outStatusUser, outStatusCard, isLoggedIn } = props;
     const handleClick = (Page) => {
         setActivePage(Page);
         if (Page === "login") {
             addStatusLogin({status: false});
+            addStatusCard({status: false});
             fetchUserSuccess({});
             outCurrentUser("");
             outStatusUser();
+            outStatusCard();
+            localStorage["statusLogin"] = JSON.stringify({ status: false });
+            localStorage["statusCard"] = JSON.stringify({ status: false });
         }
     }
 

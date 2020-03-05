@@ -22,6 +22,7 @@ const userFetchingRegistrMiddleware = store => next => action => {
                 store.dispatch(fetchUserSuccess(result));
                 if (result.success === true) {
                     store.dispatch(statusLogin({status: true, token: result.token}));
+                    localStorage["statusLogin"] = JSON.stringify({ status: true, token: result.token });
                 }
             })
             .catch(error => {

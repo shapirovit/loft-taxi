@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 const FormCard = (props) => {
 
-    const { /* addNewCard, */ addStatusCard, addActivePage, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
+    const { /* addNewCard, */ addStatusCard, /* addActivePage, */ handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
