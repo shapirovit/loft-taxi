@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Authorization = React.createContext();
 
-export const LoginProvider = ( {children}, loc ) => {
+export const LoginProvider = ( {children} ) => {
 
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 

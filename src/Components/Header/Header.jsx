@@ -1,14 +1,36 @@
-import React, { useContext } from 'react';
+import React /* , { useContext } */ from 'react';
 import LinkHeader from '../LinkHeader';
 import links from './links';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { Logo } from 'loft-taxi-mui-theme';
-import { Authorization } from '../../Context/authorization';
+// import { Authorization } from '../../Context/authorization';
+import statusLogin from "../../Actions/statusLogin";
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.statusLogin.status,
+        State: state
+    }
+  }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addStatusLogin: (bool) => {
+        dispatch(statusLogin(bool))
+        }
+    }
+}
 
 const Header = props => {
 
-    const auth = useContext(Authorization);
+    const { /* addStatusLogin, */ isLoggedIn, State } = props;
+
+    console.log("State in Header=", State);
+    
+
+    // const auth = useContext(Authorization);
 
 /*     const handleClick = event => {
         event.preventDefault();
@@ -20,7 +42,7 @@ const Header = props => {
         props.handleClick({isLogin: {islogin}, activePage: {activePage} });
     } */
 
-    if (auth.isLoggedIn) {
+    if (isLoggedIn) {
         return (        
             <div className="header">
                 <div className="header-center">
@@ -28,7 +50,7 @@ const Header = props => {
                     <div className="header-menu">
                         {links.map( link =>
                             <LinkHeader
-                            hrefPage="" /* {props.hrefPage || ""} */
+                            hrefPage={`/${link.id}`} /* {props.hrefPage || ""} */
                             page={link.link}
                             activePage={props.activePage}
                             handleClick={props.handleClick}
@@ -55,4 +77,9 @@ Header.propTypes = {
 //     // handleClick: PropTypes.func.isRequired
 // }
 
-export default Header;
+// export default Header;
+
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )( Header )
