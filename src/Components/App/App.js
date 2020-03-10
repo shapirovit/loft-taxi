@@ -6,17 +6,19 @@ import Profile from '../../Pages/Profile';
 import Login from '../../Pages/Login';
 // import { Authorization } from '../../Context/authorization';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import statusLogin from "../../Actions/statusLogin";
-import statusCard from "../../Actions/statusCard";
-import fetchUserSuccess from "../../Actions/fetchUserSuccess";
-import currentUser from "../../Actions/currentUser";
-import fetchUserOut from "../../Actions/fetchUserOut"
-import { fetchCardOut } from "../../Actions/fetchCard"
+import { statusLogin } from "../../moduls/statusLogin";
+import { statusCard } from "../../moduls/statusCard";
+import { fetchUserSuccess } from "../../moduls/fetchUser";
+import { currentUser } from "../../moduls/currentUser";
+import { fetchUserOut } from "../../moduls/fetchUser"
+import { fetchCardOut } from "../../moduls/fetchCard"
 import { connect } from 'react-redux';
+import { getStatusLoginStatus } from '../../moduls/statusLogin';
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.statusLogin.status
+        isLoggedIn: getStatusLoginStatus(state),
+        State: state
     }
   }
 
@@ -45,7 +47,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const App = (props) => {
     const [activePage, setActivePage] = useState("login");
-    const { addStatusLogin, addStatusCard, outCurrentUser, outStatusUser, outStatusCard, isLoggedIn } = props;
+    const { addStatusLogin, addStatusCard, outCurrentUser, outStatusUser, outStatusCard, isLoggedIn, State } = props;
+
+    console.log("State=", State);
+
     const handleClick = (Page) => {
         setActivePage(Page);
         if (Page === "login") {

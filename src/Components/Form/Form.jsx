@@ -6,23 +6,25 @@ import PropTypes from 'prop-types';
 import { Grid, Button, /* Link, */ /* FormLabel, Input, */ TextField } from '@material-ui/core';
 // import { Authorization } from '../../Context/authorization';
 import { Link as NavLink } from 'react-router-dom';
-import statusLogin from "../../Actions/statusLogin";
-import currentUser from "../../Actions/currentUser";
-import fetchUserRequest from "../../Actions/fetchUserRequest";
-import fetchUserRequestRegistr from "../../Actions/fetchUserRequestRegistr";
+import { statusLogin } from "../../moduls/statusLogin";
+import { currentUser } from "../../moduls/currentUser";
+import { fetchUserRequest, fetchUserRequestRegistr } from "../../moduls/fetchUser";
 import { connect } from 'react-redux';
+import { getStatusLoginStatus } from '../../moduls/statusLogin';
+import { getCurrentUser } from '../../moduls/currentUser';
+import { getUserIsFetching, getUserIsFetched, getUserStatus, getUserError } from '../../moduls/fetchUser';
 
 
 const mapStateToProps = (state) => {
     return {
         State: state,
-        isLoggedIn: state.statusLogin.status,
-        currentUser: state.currentUser,
+        isLoggedIn: getStatusLoginStatus(state),
+        currentUser: getCurrentUser(state),
 
-        isFetching: state.fetchUser.isFetching,
-        isFetched: state.fetchUser.isFetched,
-        loginStatus: state.fetchUser.status,
-        error: state.fetchUser.error,
+        isFetching: getUserIsFetching(state),
+        isFetched: getUserIsFetched(state),
+        loginStatus: getUserStatus(state),
+        error: getUserError(state),
     }
   }
 

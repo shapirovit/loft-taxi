@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import './Header.css';
 import { Logo } from 'loft-taxi-mui-theme';
 // import { Authorization } from '../../Context/authorization';
-import statusLogin from "../../Actions/statusLogin";
+import statusLogin from "../../moduls/statusLogin";
 import { connect } from 'react-redux';
+import { getStatusLoginStatus } from '../../moduls/statusLogin';
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.statusLogin.status,
+        isLoggedIn: getStatusLoginStatus(state),
         State: state
     }
   }
@@ -79,7 +80,7 @@ Header.propTypes = {
 
 // export default Header;
 
-export default  connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
   )( Header )

@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import './FormMap.css';
 import { Paper, Button, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import statusCard from "../../Actions/statusCard";
+import { statusCard } from "../../moduls/statusCard";
 import { connect } from 'react-redux';
+import { getStatusCardStatus } from '../../moduls/statusCard';
 
 const mapStateToProps = (state) => {
     return {        
-        cardStatus: state.statusCard.status,
+        cardStatus: getStatusCardStatus(state),
     }
 }
 

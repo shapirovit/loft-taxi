@@ -7,23 +7,20 @@ import { theme } from "loft-taxi-mui-theme"; // Импортируем саму 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { LoginProvider } from './Context/authorization';
 import {BrowserRouter} from 'react-router-dom';
-
-import { createStore, applyMiddleware } from 'redux';
-import reducerApp from './Reducers';
 import { Provider } from 'react-redux';
-import userFetchingMiddleware from './Middlewares';
-import userFetchingRegistrMiddleware from './Middlewares/userFetchingRegistrMiddleware'
-import cardFetchingMiddleware from './Middlewares/cardFetchingMiddleware'
+// import userFetchingMiddleware from './Middlewares';
+// import userFetchingRegistrMiddleware from './Middlewares/userFetchingRegistrMiddleware';
+// import cardFetchingMiddleware from './Middlewares/cardFetchingMiddleware';
+import createAppStore from './createAppStore';
 
 
 // ReactDOM.render(<App />, document.getElementById('root'));
-
-let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware, userFetchingRegistrMiddleware, cardFetchingMiddleware));
+// let store = createStore(reducerApp, applyMiddleware(userFetchingMiddleware, userFetchingRegistrMiddleware, cardFetchingMiddleware));
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <BrowserRouter>
-            <Provider store={store} >
+            <Provider store={createAppStore()} >
             <LoginProvider>
                 <App />
             </LoginProvider>

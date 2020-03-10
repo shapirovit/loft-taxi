@@ -5,32 +5,32 @@ import { Paper, Grid, Typography, Card, Button, TextField, InputAdornment, IconB
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import activePage from "../../Actions/activePage";
-import { fetchCardRequest } from "../../Actions/fetchCard";
+import { fetchCardRequest } from "../../moduls/fetchCard";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import statusCard from "../../Actions/statusCard";
+import { statusCard } from "../../moduls/statusCard";
+import { fetchCardOut } from "../../moduls/fetchCard";
+import { getStatusCardStatus, getToken, getCardIsFetching, getFetchCardError } from '../../moduls/fetchCard';
 
 const mapStateToProps = (state) => {
     return {
-        currentCard: state.addCard,
-        cardStatus: state.statusCard.status,
-        token: state.statusLogin.token,
-        isFetching: state.fetchCard.isFetching,
-        error: state.fetchCard.error,
+        cardStatus: getStatusCardStatus(state),
+        token: getToken(state),
+        isFetching: getCardIsFetching(state),
+        error: getFetchCardError(state),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        addActivePage: (page) => {
-            dispatch(activePage(page))
-        },
+    return {        
         addFetchCard: (card) => {
             dispatch(fetchCardRequest(card))
         },
         addStatusCard: (obj) => {
             dispatch(statusCard(obj))
+        },
+        fetchOutStatusCard: () => {
+            dispatch(fetchCardOut())
         },
     }
 }
@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 const FormCard = (props) => {
 
-    const { /* addNewCard, */ addStatusCard, /* addActivePage, */ handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
+    const { addStatusCard, fetchOutStatusCard, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
@@ -126,7 +126,6 @@ const FormCard = (props) => {
 
     const handleClickMap = event => {
         event.preventDefault();
-        // addActivePage('map');
         handleClick('map');
     };
 
@@ -136,7 +135,6 @@ const FormCard = (props) => {
             let card = {...values, token: token};
             delete card.showCvc;
             addFetchCard(card);
-            // addNewCard(values);
             setValues({
                 cardNumber: '',
                 expiryDate: '',
@@ -146,6 +144,7 @@ const FormCard = (props) => {
             });
         } else {
             addStatusCard({status: false});
+            fetchOutStatusCard();
         }
     }
 
