@@ -14,6 +14,7 @@ import { fetchUserOut } from "../../moduls/fetchUser"
 import { fetchCardOut } from "../../moduls/fetchCard"
 import { connect } from 'react-redux';
 import { getStatusLoginStatus } from '../../moduls/statusLogin';
+import { statusOrder } from '../../moduls/statusOrder';
 
 const mapStateToProps = (state) => {
     return {
@@ -42,12 +43,15 @@ const mapDispatchToProps = (dispatch) => {
         outStatusCard: () => {
             dispatch(fetchCardOut())
         },
+        addStatusOrder: (obj) => {
+            dispatch(statusOrder(obj))
+        },
     }
 }
 
 const App = (props) => {
     const [activePage, setActivePage] = useState("login");
-    const { addStatusLogin, addStatusCard, outCurrentUser, outStatusUser, outStatusCard, isLoggedIn, State } = props;
+    const { addStatusLogin, addStatusCard, addStatusOrder, outCurrentUser, outStatusUser, outStatusCard, isLoggedIn, State } = props;
 
     console.log("State=", State);
 
@@ -62,6 +66,8 @@ const App = (props) => {
             outStatusCard();
             localStorage["statusLogin"] = JSON.stringify({ status: false });
             localStorage["statusCard"] = JSON.stringify({ status: false });
+            addStatusOrder({status: false})
+            localStorage["statusOrder"] = JSON.stringify({ status: false });
         }
     }
 

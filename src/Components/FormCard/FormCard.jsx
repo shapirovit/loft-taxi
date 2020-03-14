@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { statusCard } from "../../moduls/statusCard";
 import { fetchCardOut } from "../../moduls/fetchCard";
 import { getStatusCardStatus, getToken, getCardIsFetching, getFetchCardError } from '../../moduls/fetchCard';
+import { statusOrder } from '../../moduls/statusOrder';
 
 const mapStateToProps = (state) => {
     return {
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchOutStatusCard: () => {
             dispatch(fetchCardOut())
+        },
+        addStatusOrder: (obj) => {
+            dispatch(statusOrder(obj))
         },
     }
 }
@@ -99,7 +103,7 @@ const useStyles = makeStyles(theme => ({
 
 const FormCard = (props) => {
 
-    const { addStatusCard, fetchOutStatusCard, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
+    const { addStatusCard, addStatusOrder, fetchOutStatusCard, handleClick, error, isFetching, cardStatus, addFetchCard, token } = props;
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:700px)');
@@ -145,6 +149,8 @@ const FormCard = (props) => {
         } else {
             addStatusCard({status: false});
             fetchOutStatusCard();
+            addStatusOrder({status: false})
+            localStorage["statusOrder"] = JSON.stringify({ status: false });
         }
     }
 
