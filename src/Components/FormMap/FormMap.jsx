@@ -1,4 +1,4 @@
-import React, { useEffect, useState/* , useCallback */ } from 'react';
+import React, { useEffect, useState, useCallback/* , useRef */ } from 'react';
 import './FormMap.css';
 import { Link } from 'react-router-dom';
 import { Paper, Button, TextField, Typography } from '@material-ui/core';
@@ -87,8 +87,13 @@ const FormMap = (props) => {
 
     // let indexFrom;
     // let indexTo;
-    let addressFrom = addresses.slice();
-    let addressTo = addresses.slice();
+
+    // let addressFrom = addresses.slice();
+    // let addressTo = addresses.slice();
+
+    // const [addressFrom, setAddressFrom] = useState(addresses.slice());
+    // const [addressTo, setAddressTo] = useState(addresses.slice());
+
     // let selectFieldFrom = "";
     // let selectFieldTo = "";
 
@@ -97,15 +102,38 @@ const FormMap = (props) => {
     const [selectFieldFrom, setSelectFieldFrom] = useState("");
     const [selectFieldTo, setSelectFieldTo] = useState("");
 
+    // const addressFrom = useRef(addresses.slice());
+
+    const showAddressesFrom = useCallback( (options) => {
+        options = options.filter(adress => adress !== selectFieldTo );
+        return options;
+    }, [selectFieldTo] );
+
+    const showAddressesTo = useCallback( (options) => {
+        options = options.filter(adress => adress !== selectFieldFrom );
+        return options;
+    }, [selectFieldFrom] );
+
+    // const option = options.find(address => address === selectFieldTo );
+    // if (option) return undefined;
+
+    // useEffect(() => {
+    //     addressFrom.current = addressFrom.current.filter(adress => adress !== selectFieldTo );
+    // }, [selectFieldTo]);
+
     const handleChangeFrom = (event, value, reason) => {
         if ( (reason === "reset") || (reason === "clear") ) {
             setSelectFieldFrom(value);
+            // setAddressTo(addresses.slice());
+            // setAddressTo(addressTo.filter(adress => adress !== selectFieldFrom ));
         }
     }
 
     const handleChangeTo = (event, value, reason) => {
         if ( (reason === "reset") || (reason === "clear") ) {
             setSelectFieldTo(value);
+            // setAddressFrom(addresses.slice());
+            // setAddressFrom(addressFrom.filter(adress => adress !== selectFieldTo ));
         }
     }
 
@@ -331,8 +359,12 @@ const FormMap = (props) => {
                     <Autocomplete
                     id="combo-box-demo-from"
                     onInputChange={handleChangeFrom}
-                    options={addressFrom}
+                    options={addresses}
                     getOptionLabel={option => option}
+                    // filterSelectedOptions={true}
+                    filterOptions={showAddressesFrom}
+                    // renderOption={showAddressesFrom}
+
                     style={{ marginBottom: "40px" }}
                     renderInput={params => (
                         <TextField {...params} label="Откуда" fullWidth />
@@ -341,8 +373,9 @@ const FormMap = (props) => {
                     <Autocomplete
                     id="combo-box-demo-to"
                     onInputChange={handleChangeTo}
-                    options={addressTo}
+                    options={addresses}
                     getOptionLabel={option => option}
+                    filterOptions={showAddressesTo}
                     style={{ marginBottom: "40px" }}
                     // style={{ width: 300 }}
                     renderInput={params => (
